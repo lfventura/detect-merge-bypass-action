@@ -1,0 +1,27 @@
+name: Detect Merge Bypass
+description: Detect if a merge bypassed required checks.
+inputs:
+  github_token:
+    description: 'GitHub token for API access'
+    required: true
+  owner:
+    description: 'Owner of the repository'
+    required: false
+    default: '${{ github.repository_owner }}'
+  repo:
+    description: 'Name of the repository'
+    required: false
+    default: '${{ github.event.repository.name }}'
+  sha:
+    description: 'SHA of the commit to check'
+    required: false
+    default: '${{ github.sha }}'
+outputs:
+  merge_bypass_detected:
+    description: 'True if a merge bypassed required checks'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+branding:
+  icon: 'shield'
+  color: 'red'

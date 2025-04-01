@@ -1,15 +1,14 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-export async function run() {
+export async function run(): Promise<void> {
   try {
-    const token = core.getInput('github_token');
-    const octokit = github.getOctokit(token);
-    const { context } = github;
+    const token: string = core.getInput('github_token');
+    const octokit: ReturnType<typeof github.getOctokit> = github.getOctokit(token);
 
-    const repo = core.getInput('repo') || context.repo.repo;
-    const owner = core.getInput('owner') || context.repo.owner;
-    const sha = core.getInput('sha') || context.sha;
+    const repo: string = core.getInput('repo');
+    const owner: string = core.getInput('owner');
+    const sha: string = core.getInput('sha');
 
     // Get all required checks for the branch
     core.info('Fetching branch rules...');
@@ -18,9 +17,16 @@ export async function run() {
       repo,
     });
 
-    const requiredChecks = branchRules.data
-      .filter(rule => rule.type === 'required_status_checks')
-      .flatMap(rule => rule.parameters.required_status_checks.map(check => check.context));
+    interface BranchRule {
+      type: string;
+      parameters: {
+        required_status_checks: { context: string }[];
+      };
+    }
+
+    const requiredChecks = (branchRules.data as BranchRule[])
+      .filter((rule: BranchRule) => rule.type === 'required_status_checks')
+      .flatMap((rule: BranchRule) => rule.parameters.required_status_checks.map((check: { context: string }) => check.context));
 
     if (requiredChecks.length === 0) {
       core.info('No required checks configured for the branch.');
@@ -66,13 +72,13 @@ export async function run() {
       ref: sha,
     });
 
-    const latestChecks = prChecks.data.check_runs.reduce((acc, check) => {
+    const latestChecks = prChecks.data.check_runs.reduce((acc: Record<string, typeof prChecks.data.check_runs[0]>, check: typeof prChecks.data.check_runs[0]) => {
       // core.info(`Check Name: ${check.name}`);
       if (!acc[check.name] || acc[check.name].check_suite.id < check.check_suite.id) {
         acc[check.name] = check;
       }
       return acc;
-    }, {});
+    }, {} as Record<string, typeof prChecks.data.check_runs[0]>);
 
     // Verify if all required checks passed
     let merge_bypass_detected = false;
@@ -96,6 +102,10 @@ export async function run() {
 
     core.setOutput('merge_bypass_detected', merge_bypass_detected);
   } catch (error) {
-    core.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    } else {
+      core.setFailed(String(error));
+    }
   }
 }

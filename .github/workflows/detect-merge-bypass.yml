@@ -17,6 +17,7 @@ jobs:
 
     steps:
       # Run the custom action
+      - uses: actions/checkout@v4
       - name: Run Detect Merge Bypass
         uses: ./ # Use the current repository as the action
         with:

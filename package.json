@@ -1,13 +1,14 @@
 {
-  "name": "dependabot-alerts",
+  "name": "detect-merge-bypass-action",
   "version": "1.0.0",
-  "description": "A GitHub Actions module for alerting on repo dependabot open alerts.",
+  "description": "A GitHub Action to detect if a pull request was merged with the bypass merge method.",
   "main": "dist/index.ts",
   "scripts": {
     "test": "npx jest",
     "lint": "eslint src/**/*.ts",
     "lintfix": "eslint src/**/*.ts --fix",
-    "build": "ncc build src/index.ts --out dist"
+    "build": "ncc build src/index.ts --out dist",
+    "local-test": "npx local-action . src/run.ts .env"
   },
   "keywords": [
     "github",

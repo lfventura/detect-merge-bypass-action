@@ -1,0 +1,23 @@
+name: Detect Merge Bypass
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  pull-requests: read
+  checks: read
+  statuses: read 
+
+jobs:
+  detect_merge_bypass:
+    name: Detect Merge Bypass
+    runs-on: ubuntu-latest
+
+    steps:
+      # Run the custom action
+      - name: Run Detect Merge Bypass
+        uses: ./ # Use the current repository as the action
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

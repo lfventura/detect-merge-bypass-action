@@ -1,0 +1,35 @@
+{
+  "name": "dependabot-alerts",
+  "version": "1.0.0",
+  "description": "A GitHub Actions module for alerting on repo dependabot open alerts.",
+  "main": "dist/index.ts",
+  "scripts": {
+    "test": "npx jest",
+    "lint": "eslint src/**/*.ts",
+    "lintfix": "eslint src/**/*.ts --fix",
+    "build": "ncc build src/index.ts --out dist"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "module"
+  ],
+  "author": "Lucas Ventura",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "node-fetch": "^3.3.1"
+  },
+  "devDependencies": {
+    "@github/local-action": "github:github/local-action",
+    "@types/jest": "^29.5.14",
+    "@vercel/ncc": "^0.38.3",
+    "eslint": "^9.23.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

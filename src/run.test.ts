@@ -37,7 +37,7 @@ describe('run', () => {
         expect(core.setOutput).toHaveBeenCalledWith('merge_bypass_detected', 'false');
     });
 
-    it('should detect no PR associated with the commit and set merge_bypass_detected to false', async () => {
+    it('should detect no PR associated with the commit and set merge_bypass_detected to true', async () => {
         mockOctokit.request
             .mockResolvedValueOnce({
                 data: [
@@ -53,7 +53,7 @@ describe('run', () => {
 
         expect(core.info).toHaveBeenCalledWith('Fetching PR associated with the commit...');
         expect(core.info).toHaveBeenCalledWith('No PR associated with this push.');
-        expect(core.setOutput).toHaveBeenCalledWith('merge_bypass_detected', 'false');
+        expect(core.setOutput).toHaveBeenCalledWith('merge_bypass_detected', 'true');
     });
 
     it('should detect merge bypass when required checks do not pass', async () => {

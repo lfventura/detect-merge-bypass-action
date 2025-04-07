@@ -31868,7 +31868,7 @@ async function run() {
         });
         if (prData.data.length === 0) {
             core.info('No PR associated with this push.');
-            core.setOutput('merge_bypass_detected', 'false');
+            core.setOutput('merge_bypass_detected', 'true');
             return;
         }
         const prNumber = prData.data[0].number;

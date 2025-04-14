@@ -17,9 +17,18 @@ inputs:
     description: 'SHA of the commit to check'
     required: false
     default: '${{ github.sha }}'
+  fail_on_bypass_detected:
+    description: 'Fail the action if a merge bypassed required checks'
+    required: false
+    default: false
+    
 outputs:
   merge_bypass_detected:
     description: 'True if a merge bypassed required checks'
+  commit_actor:
+    description: 'The actor who made the commit'
+  commit_from_pr:
+    description: 'True if the commit is from a pull request'
 runs:
   using: 'node20'
   main: 'dist/index.js'

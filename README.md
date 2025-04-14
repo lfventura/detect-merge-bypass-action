@@ -27,12 +27,15 @@ The **Detect Merge Bypass Action** is a GitHub Action designed to ensure that al
 | `repo`         | Name of the repository                           | Yes      | github.repository_owner     |
 | `owner`        | Owner of the repository                          | Yes      | github.event.repository.name     |
 | `sha`          | SHA of the commit at main branch to be verified                 | Yes      | github.sha     |
+| `fail_on_bypass_detected`          | Fail the action if a bypass is detected                 | No      | false    |
 
 ## Outputs
 
 | Name                   | Description                                      |
 |-------------------------|--------------------------------------------------|
 | `merge_bypass_detected` | `true` if a merge bypass is detected, otherwise `false`. |
+| `commit_actor` | The github username responsible for the analysed sha |
+| `commit_from_pr` | `true` if the commit has gone through a PR. |
 
 ## Usage
 

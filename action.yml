@@ -30,7 +30,7 @@ outputs:
   commit_from_pr:
     description: 'True if the commit is from a pull request'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'
 branding:
   icon: 'shield'

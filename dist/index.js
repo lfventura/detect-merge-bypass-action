@@ -31930,7 +31930,6 @@ async function run() {
                 const approvedReviews = prReviews.data.filter((review) => review.state === 'APPROVED');
                 if (approvedReviews.length >= requiredReviews) {
                     core.info(`PR has ${approvedReviews.length} approved reviews.`);
-                    console.log("oi");
                 }
                 else {
                     core.warning('No approved reviews found for the PR.');
